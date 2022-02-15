@@ -34,3 +34,39 @@ def seq_count_base(seq):
             countT += 1
     return countA, countC, countG, countT
 
+def seq_count(seq):
+    d = {'A': 0, 'T': 0, 'C': 0, 'G': 0}
+    for i in seq:
+        if i == "A":
+            d['A'] += 1
+        elif i == "C":
+            d['C'] += 1
+        elif i == "G":
+            d['G'] += 1
+        elif i == "T":
+            d['T'] += 1
+    return d
+
+def seq_reverse():
+    sequence = open("./sequences/U5", "r").read()
+    sequence = sequence[:20]
+    reverse_seq = ""
+    for i in sequence:
+        reverse_seq = reverse_seq + sequence[i-1]
+    return sequence, reverse_seq
+
+
+def frequent_base(countA, countC, countG, countT):
+    if countA > countC and countA > countG and countA > countT:
+        most_frequent = "A"
+    elif countC > countA and countC > countG and countC > countT:
+        most_frequent = "C"
+    elif countG > countA and countG > countC and countG > countT:
+        most_frequent = "G"
+    elif countT > countA and countT > countG and countT > countC:
+        most_frequent = "T"
+    return most_frequent
+
+
+
+
