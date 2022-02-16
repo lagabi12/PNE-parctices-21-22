@@ -47,16 +47,24 @@ def seq_count(seq):
             d['T'] += 1
     return d
 
-def seq_reverse():
-    sequence = open("./sequences/U5", "r").read()
-    sequence = sequence[:20]
+def seq_reverse(seq):
+    sequence = seq[:20]
     reverse_seq = ""
+    complement_seq = ""
     for i in sequence:
-        reverse_seq = reverse_seq + sequence[i-1]
-    return sequence, reverse_seq
 
+        if i == "A":
+            complement_seq += "T"
+        elif i == "G":
+            complement_seq += "C"
+        elif i == "C":
+            complement_seq += "G"
+        elif i == "T":
+            complement_seq += "A"
+    return sequence, reverse_seq, complement_seq
 
 def frequent_base(countA, countC, countG, countT):
+    most_frequent = ""
     if countA > countC and countA > countG and countA > countT:
         most_frequent = "A"
     elif countC > countA and countC > countG and countC > countT:
@@ -65,6 +73,7 @@ def frequent_base(countA, countC, countG, countT):
         most_frequent = "G"
     elif countT > countA and countT > countG and countT > countC:
         most_frequent = "T"
+
     return most_frequent
 
 
