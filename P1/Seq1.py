@@ -68,3 +68,31 @@ class Seq:
             elif i == "T":
                 d['T'] += 1
         return d
+
+
+    def seq_reverse(self):
+        if self.strbases == "NULL":
+            reverse_seq = "NULL"
+        elif self.strbases == "ERROR":
+            reverse_seq = "ERROR"
+        else:
+            reverse_seq = self.strbases[::-1]
+        return reverse_seq
+
+    def comp(self):
+        complement_seq = ""
+        if self.strbases == "NULL":
+            complement_seq = "NULL"
+        elif self.strbases == "ERROR":
+            complement_seq = "ERROR"
+        else:
+            for i in self.strbases:
+                if i == "A":
+                    complement_seq += "T"
+                elif i == "G":
+                    complement_seq += "C"
+                elif i == "C":
+                    complement_seq += "G"
+                elif i == "T":
+                    complement_seq += "A"
+        return complement_seq

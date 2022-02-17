@@ -49,10 +49,9 @@ def seq_count(seq):
 
 def seq_reverse(seq):
     sequence = seq[:20]
-    reverse_seq = ""
+    reverse_seq = sequence[::-1]
     complement_seq = ""
     for i in sequence:
-
         if i == "A":
             complement_seq += "T"
         elif i == "G":
