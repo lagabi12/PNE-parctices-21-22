@@ -39,7 +39,7 @@ class Seq:
             lenght = len(self.strbases)
         return lenght
 
-    def seq_count_base(self):
+    def count_base(self):
         countA = 0
         countC = 0
         countG = 0
@@ -55,3 +55,16 @@ class Seq:
             elif i == "T":
                 countT += 1
         return countA, countC, countG, countT
+
+    def count(self):
+        d = {'A': 0, 'T': 0, 'C': 0, 'G': 0}
+        for i in self.strbases:
+            if i == "A":
+                d['A'] += 1
+            elif i == "C":
+                d['C'] += 1
+            elif i == "G":
+                d['G'] += 1
+            elif i == "T":
+                d['T'] += 1
+        return d
