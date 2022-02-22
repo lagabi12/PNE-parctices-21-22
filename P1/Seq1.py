@@ -32,7 +32,7 @@ class Seq:
         # -- We just return the string with the sequence
         return self.strbases
 
-    def read_fasta(filename):
+    def read_fasta(self, filename):
         seq = open(filename, "r").read()
         seq = seq[seq.find("\n"):].replace("\n", "")
         return seq
