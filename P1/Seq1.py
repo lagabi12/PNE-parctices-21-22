@@ -32,6 +32,11 @@ class Seq:
         # -- We just return the string with the sequence
         return self.strbases
 
+    def read_fasta(filename):
+        seq = open(filename, "r").read()
+        seq = seq[seq.find("\n"):].replace("\n", "")
+        return seq
+
     def len(self):
         if self.strbases == "NULL" or self.strbases == "ERROR":
             lenght = 0
@@ -39,13 +44,13 @@ class Seq:
             lenght = len(self.strbases)
         return lenght
 
-    def count_base(self):
+    def count_base(seq):
         countA = 0
         countC = 0
         countG = 0
         countT = 0
 
-        for i in self.strbases:
+        for i in seq:
             if i == "A":
                 countA += 1
             elif i == "C":
@@ -96,3 +101,15 @@ class Seq:
                 elif i == "T":
                     complement_seq += "A"
         return complement_seq
+
+    def frequent_base(countA, countC, countG, countT):
+        most_frequent = ""
+        if countA > countC and countA > countG and countA > countT:
+            most_frequent = "A"
+        elif countC > countA and countC > countG and countC > countT:
+            most_frequent = "C"
+        elif countG > countA and countG > countC and countG > countT:
+            most_frequent = "G"
+        elif countT > countA and countT > countG and countT > countC:
+            most_frequent = "T"
+        return most_frequent
