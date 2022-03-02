@@ -4,7 +4,7 @@ def seq_ping():
 def valid_file():
     exit = False
     while not exit:
-        filename = input("Name of file:")
+        filename = "./sequences/" + input("Name of file:")
         try:
             f = open(filename)
             exit = True

@@ -44,13 +44,14 @@ class Seq:
             lenght = len(self.strbases)
         return lenght
 
-    def count_base(seq):
+    def count_base(self):
+
         countA = 0
         countC = 0
         countG = 0
         countT = 0
 
-        for i in seq:
+        for i in self.strbases:
             if i == "A":
                 countA += 1
             elif i == "C":
@@ -63,7 +64,7 @@ class Seq:
 
     def count(self):
         d = {'A': 0, 'T': 0, 'C': 0, 'G': 0}
-        for i in self.strbases:
+        for i in d:
             if i == "A":
                 d['A'] += 1
             elif i == "C":
