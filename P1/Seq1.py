@@ -6,14 +6,26 @@ class Seq:
         # Initialize the sequence with the value
         # passed as argument when creating the object
         self.strbases = strbases
-        if self.strbases == "NULL":
-            print("Null Seq created")
+        if strbases == "NULL":
+            print("NULL seq created")
+            exit = False
         else:
             if not self.valid_sequence():
                 self.strbases = "ERROR"
-                print("ERROR!!")
+                print("INVALID seq!")
             else:
                 print("New sequence created!")
+
+    @staticmethod
+    def valid_sequence2(sequence):
+        valid = True
+        i = 0
+        while i < len(sequence):
+            c = sequence[i]
+            if c != "A" and c != "C" and c != "G" and c != "T":
+                valid = False
+            i += 1
+        return valid
 
 
     def valid_sequence(self):
@@ -26,91 +38,103 @@ class Seq:
             i += 1
         return valid
 
+
+
     def __str__(self):
         """Method called when the object is being printed"""
 
         # -- We just return the string with the sequence
         return self.strbases
 
-    def read_fasta(self, filename):
-        seq = open(filename, "r").read()
-        seq = seq[seq.find("\n"):].replace("\n", "")
-        return seq
-
     def len(self):
-        if self.strbases == "NULL" or self.strbases == "ERROR":
-            lenght = 0
+        """Calculate the length of the sequence"""
+        if self.valid_sequence():
+            return len(self.strbases)
         else:
-            lenght = len(self.strbases)
-        return lenght
+            return 0
+
 
     def count_base(self):
-
-        countA = 0
-        countC = 0
-        countG = 0
-        countT = 0
-
+        count_a = 0
+        count_c = 0
+        count_g = 0
+        count_t = 0
         for i in self.strbases:
             if i == "A":
-                countA += 1
+                count_a += 1
             elif i == "C":
-                countC += 1
+                count_c += 1
             elif i == "G":
-                countG += 1
+                count_g += 1
             elif i == "T":
-                countT += 1
-        return countA, countC, countG, countT
+                count_t += 1
+        return count_a, count_c, count_g, count_t
 
     def count(self):
-        d = {'A': 0, 'T': 0, 'C': 0, 'G': 0}
-        for i in d:
-            if i == "A":
-                d['A'] += 1
-            elif i == "C":
-                d['C'] += 1
-            elif i == "G":
-                d['G'] += 1
-            elif i == "T":
-                d['T'] += 1
+        d = {"A": 0, "C": 0, "G": 0, "T": 0}
+        for b in self.strbases:
+            try:
+                d[b] += 1
+            except BaseException:
+                return d
         return d
 
-
-    def seq_reverse(self):
-        if self.strbases == "NULL":
-            reverse_seq = "NULL"
-        elif self.strbases == "ERROR":
-            reverse_seq = "ERROR"
+    def reverse(self):
+        if self.valid_sequence():
+            fragment = self.strbases
+            reverse = fragment[::-1]
+            return reverse
         else:
-            reverse_seq = self.strbases[::-1]
-        return reverse_seq
+            return self.strbases
 
-    def comp(self):
-        complement_seq = ""
-        if self.strbases == "NULL":
-            complement_seq = "NULL"
-        elif self.strbases == "ERROR":
-            complement_seq = "ERROR"
-        else:
-            for i in self.strbases:
+    def complement(self):
+        if self.valid_sequence():
+            frag = self.strbases
+            complementary = ""
+            for i in frag:
                 if i == "A":
-                    complement_seq += "T"
-                elif i == "G":
-                    complement_seq += "C"
-                elif i == "C":
-                    complement_seq += "G"
+                    complementary += "T"
                 elif i == "T":
-                    complement_seq += "A"
-        return complement_seq
+                    complementary += "A"
+                elif i == "C":
+                    complementary += "G"
+                elif i == "G":
+                    complementary += "C"
+            return complementary
+        else:
+            return self.strbases
 
-    def frequent_base(countA, countC, countG, countT):
-        most_frequent = ""
-        if countA > countC and countA > countG and countA > countT:
-            most_frequent = "A"
-        elif countC > countA and countC > countG and countC > countT:
-            most_frequent = "C"
-        elif countG > countA and countG > countC and countG > countT:
-            most_frequent = "G"
-        elif countT > countA and countT > countG and countT > countC:
-            most_frequent = "T"
-        return most_frequent
+    def get_file(self):
+        exit = False
+        while not exit:
+            folder = "./sequences/"
+            self.filename = input("Enter the name of the file: ")
+            try:
+                filename = open(folder + self.filename + ".txt", "r")
+                exit = True
+                return filename
+            except FileNotFoundError:
+                if self.filename.lower() == "exit":
+                    print("The program is finished. You pressed exit.")
+                    filename = "none"
+                    exit = True
+                    return filename
+                else:
+                    print("File was not found")
+
+    def read_fasta2(self, filename):
+        from pathlib import Path
+        file_contents = Path(filename).read_text()
+        lines = file_contents.splitlines()
+        body = lines[1:]
+        self.strbases = ""
+        for line in body:
+            self.strbases += line
+
+    def processing_genes(self, d):
+        highest_value = 0
+        for k, v in d.items():
+            if int(v) > highest_value:
+                highest_value = int(v)
+                base = k
+        return base

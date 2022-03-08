@@ -1,9 +1,7 @@
 from Seq1 import Seq
 
-# -- Creating a Null sequence
-s1 = Seq()
-# -- Creating a valid sequence
+s = Seq()
 s2 = Seq("TATAC")
 
-print(f"Sequence 1: {s1}")
-print(f"Sequence 2: {s2}")
+print(f"  Sequence 1:  {s}")
+print(f"  Sequence 2:  {s2}")

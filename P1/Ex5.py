@@ -1,18 +1,15 @@
 from Seq1 import Seq
 
-#Null sequence
 s1 = Seq()
-#valid sequence
 s2 = Seq("ACTGA")
-#invalid sequence
-s3 = Seq("Invalid sequence")
+s3 = Seq("DGTTRR")
 
-print("Sequence 1:", "(Length:", Seq.len(s1), ")", f'{s1}')
-countA, countC, countG, countT = Seq.count_base(s1)
-print("A:", countA, "C:", countC, "G:", countG, "T:", countT)
-print("Sequence 2:", "(Length:", Seq.len(s2), ")", f'{s2}')
-countA, countC, countG, countT = Seq.count_base(s2)
-print("A:", countA, "C:", countC, "G:", countG, "T:", countT)
-print("Sequence 3:", "(Length:", Seq.len(s3), ")", f'{s3}')
-countA, countC, countG, countT = Seq.count_base(s3)
-print("A:", countA, "C:", countC, "G:", countG, "T:", countT)
+print(f"  Sequence 1:  (Length: {s1.len()})  {s1}")
+a, c, g, t = s1.count_base()
+print("A:", a, "C:", c, "T:", t, "G:", g)
+print(f"  Sequence 2:  (Length: {s2.len()})  {s2}")
+a, c, g, t = s2.count_base()
+print("A:", a, "C:", c, "T:", t, "G:", g)
+print(f"  Sequence 3:  (Length: {s3.len()})  {s3}")
+a, c, g, t = s3.count_base()
+print("A:", a, "C:", c, "T:", t, "G:", g)
