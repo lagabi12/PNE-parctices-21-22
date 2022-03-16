@@ -6,16 +6,13 @@ PRACTICE = 2
 EXERCISE = 4
 print(f"-----| Practice {PRACTICE}, Exercise {EXERCISE} |------")
 IP = "127.0.0.1"
-PORT = 8081
+PORT = 8080
 c = Client(IP, PORT)
 print(c)
 
-seq0 = "FRAT1"
-seq1 = "ADA"
-seq2 = "FXN"
 FOLDER = "../P0/P0/sequences/"
 
-sequences = [seq0, seq1, seq2]
+sequences = ["FRAT1", "ADA", "FXN"]
 for r in sequences:
     s = Seq()
     s.read_fasta(FOLDER + r)

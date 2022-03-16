@@ -13,8 +13,6 @@ class Client:
 
     def talk(self, msg):
         import socket
-        PORT = 8080
-        IP = "192.168.1.45"
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((self.ip, self.port))
         s.send(str.encode(msg))
