@@ -9,7 +9,7 @@ print(f"-----| Practice {PRACTICE}, Exercise {EXERCISE} |------")
 
 # -- Parameters of the server to talk to
 IP = "127.0.0.1"
-PORT = 8080
+PORT = 1111
 # -- Print the IP and PORTs
 c = Client(IP, PORT)
 print(c)
