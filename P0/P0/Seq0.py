@@ -13,67 +13,57 @@ def valid_file():
             print("File not found")
 
 def seq_read_fasta(filename):
-    seq = open(filename, "r").read()
+    from pathlib import Path
+    seq = Path(filename).read_text()
     seq = seq[seq.find("\n"):].replace("\n", "")
     return seq
 
-def seq_count_base(seq):
-    countA = 0
-    countC = 0
-    countG = 0
-    countT = 0
+def seq_length(seq):
+    return len(seq)
 
-    for i in seq:
-        if i == "A":
-            countA += 1
-        elif i == "C":
-            countC += 1
-        elif i == "G":
-            countG += 1
-        elif i == "T":
-            countT += 1
-    return countA, countC, countG, countT
+def seq_count_bases(seq, base):
+    seq = seq[seq.find("\n") + 1:]
+    seq = seq.replace("\n", "")
+    count = 0
+
+    for e in seq:
+        if e == base:
+            count += 1
+    return count
 
 def seq_count(seq):
     d = {'A': 0, 'T': 0, 'C': 0, 'G': 0}
     for i in seq:
-        if i == "A":
-            d['A'] += 1
-        elif i == "C":
-            d['C'] += 1
-        elif i == "G":
-            d['G'] += 1
-        elif i == "T":
-            d['T'] += 1
+        for b in d:
+            if i == b:
+                d[b] += 1
     return d
 
 def seq_reverse(seq):
     sequence = seq[:20]
     reverse_seq = sequence[::-1]
-    complement_seq = ""
+    return sequence, reverse_seq
+
+def seq_complement(seq):
+    sequence = seq[:20]
+    COMPLEMENTS = {"A": "T", "T": "A", "C": "G", "G": "C"}
+    complement = ""
     for i in sequence:
-        if i == "A":
-            complement_seq += "T"
-        elif i == "G":
-            complement_seq += "C"
-        elif i == "C":
-            complement_seq += "G"
-        elif i == "T":
-            complement_seq += "A"
-    return sequence, reverse_seq, complement_seq
+        for c in COMPLEMENTS:
+            if i == c:
+                complement += COMPLEMENTS[c]
+    return complement
 
-def frequent_base(countA, countC, countG, countT):
-    most_frequent = ""
-    if countA > countC and countA > countG and countA > countT:
-        most_frequent = "A"
-    elif countC > countA and countC > countG and countC > countT:
-        most_frequent = "C"
-    elif countG > countA and countG > countC and countG > countT:
-        most_frequent = "G"
-    elif countT > countA and countT > countG and countT > countC:
-        most_frequent = "T"
+def frequent_base(seq):
+    most_common = ""
+    count = seq_count(seq)
+    for b in count:
+        if most_common == "":
+            most_common = b
+        elif int(count[b]) > count[most_common]:
+            most_common = b
 
-    return most_frequent
+    return most_common
 
 
 

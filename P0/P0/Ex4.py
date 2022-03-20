@@ -2,9 +2,10 @@ import Seq0
 
 list_genes = ["U5", "FRAT1", "ADA", "FXN", "RNU"]
 FOLDER = "./sequences/"
+BASES = ["A", "C", "T", "G"]
+
 for f in list_genes:
-    filename = FOLDER + f
-    seq = Seq0.seq_read_fasta(filename)
-    countA, countC, countG, countT = Seq0.seq_count_base(seq)
+    seq = Seq0.seq_read_fasta(FOLDER + f)
     print("GEN", f)
-    print(" A:",countA, "\n", "C:", countC, "\n", "G:", countG, "\n", "T:", countT, "\n")
+    for base in BASES:
+        print(base, ":", Seq0.seq_count_bases(seq, base))
