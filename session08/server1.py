@@ -2,7 +2,7 @@ import socket
 from colorama import init, Fore
 
 # Configure the Server's IP and PORT
-PORT = 1111
+PORT = 8080
 IP = "127.0.0.1"
 MAX_OPEN_REQUESTS = 5
 
@@ -13,8 +13,6 @@ number_con = 0
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
     serversocket.bind((IP, PORT))
-    # become a server socket
-    # MAX_OPEN_REQUESTS connect requests before refusing outside connections
     serversocket.listen(MAX_OPEN_REQUESTS)
 
     while True:
@@ -33,7 +31,7 @@ try:
         msg = clientsocket.recv(2048).decode("utf-8")
         print("Message from client: {}".format(Fore.LIGHTYELLOW_EX + msg))
 
-        # Send the messag
+        # Send the message
         message = "Hello from the teacher's server"
         send_bytes = str.encode(Fore.LIGHTGREEN_EX + message)
         # We must write bytes, not a string

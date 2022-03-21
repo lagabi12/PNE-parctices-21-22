@@ -1,4 +1,6 @@
 import socket
+
+
 class Client:
 
     def __init__(self, IP, PORT):
@@ -9,7 +11,7 @@ class Client:
         print("OK!")
 
     def __str__(self):
-        return "Connection to SERVER at " + self.ip + ", PORT:" + str(self.port)
+        return "Connection to SERVER at " + self.ip + ", PORT: " + str(self.port)
 
     def talk(self, msg):
         import socket
@@ -19,6 +21,7 @@ class Client:
         response = s.recv(2048).decode("utf-8")
         s.close()
         return response
+
 
     def debug_talk(self, msg):
         import termcolor
