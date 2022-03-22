@@ -2,7 +2,7 @@ import socket
 from colorama import init, Fore
 from Seq1 import Seq
 
-PORT = 7470
+PORT = 5678
 IP = "127.0.0.1"
 
 seq1 = "ACCTCCTCTCCAGCAATGCCAACCCCAGTCCAGGCCCCCATCCGCCCAGGATCTCGATCA"
@@ -74,10 +74,8 @@ try:
                 response = Seq.reverse(arg, valid)
             elif arg in GENES:
                 print("GENE".format(Fore.LIGHTYELLOW_EX))
-                filename = FOLDER + arg
                 s = Seq()
-                s = Seq.read_fasta2(filename)
-                response = str(s)
+                response = Seq.read_fasta2(FOLDER + arg)
             else:
                 response = "File not found"
 

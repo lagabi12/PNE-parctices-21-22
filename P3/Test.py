@@ -1,6 +1,6 @@
 from Client import Client
 IP = "127.0.0.1"
-PORT = 7470
+PORT = 5678
 
 c = Client(IP, PORT)
 print(c)
