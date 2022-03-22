@@ -16,18 +16,11 @@ class Seq:
     def valid_sequence(self):
         valid = True
         i = 0
-        if type(self) == str:
-            while i < len(self):
-                c = self[i]
-                if c != "A" and c != "C" and c != "G" and c != "T":
-                    valid = False
-                i += 1
-        else:
-            while i < len(self.strbases):
-                c = self.strbases[i]
-                if c != "A" and c != "C" and c != "G" and c != "T":
-                    valid = False
-                i += 1
+        while i < len(self):
+            c = self[i]
+            if c != "A" and c != "C" and c != "G" and c != "T":
+                valid = False
+            i += 1
         return valid
 
 
@@ -38,18 +31,16 @@ class Seq:
         # -- We just return the string with the sequence
         return self.strbases
 
-    def len(self):
+    def len(self, valid):
         """Calculate the length of the sequence"""
-        if type(self) == str:
+        if valid:
             return len(self)
-        elif self.valid_sequence():
-            return len(self.strbases)
         else:
             return 0
 
 
     def count_base(self, base):
-        seq = self.strbases[self.strbases.find("\n") + 1:]
+        seq = self[self.find("\n") + 1:]
         seq = seq.replace("\n", "")
         count = 0
 
@@ -61,45 +52,43 @@ class Seq:
 
     def count(self):
         d = {"A": 0, "C": 0, "G": 0, "T": 0}
-        for i in self.strbases:
+        for i in self:
             for b in d:
                 if i == b:
                    d[b] += 1
         return d
 
-    def reverse(self):
-        if self.valid_sequence():
-            fragment = self.strbases
+    def reverse(self, valid):
+        if valid:
+            fragment = self
             reverse = fragment[::-1]
             return reverse
         else:
-            return self.strbases
+            return self
 
-    def complement(self):
-        if self.valid_sequence():
-            if type(self) == str:
-                sequence = self
-            else:
-                sequence = self.strbases
+    def complement(self, valid):
+        if valid:
+            sequence = self
             COMPLEMENTS = {"A": "T", "T": "A", "C": "G", "G": "C"}
             complement = ""
             for i in sequence:
                for c in COMPLEMENTS:
-                   complement += COMPLEMENTS[c]
+                   if i == c:
+                        complement += COMPLEMENTS[c]
             return complement
         else:
-            return sequence
+            return "NONE"
 
     def read_fasta2(self, filename):
         from pathlib import Path
         seq = Path(filename).read_text()
         seq = seq[seq.find("\n") + 1:]
         seq = seq.replace("\n", "")
-        self.strbases = seq
+        self = seq
 
     def frequent_base(self):
         most_common = ""
-        seq = self.strbases
+        seq = self
         c = self.count()
         for b in c:
             if most_common == "":

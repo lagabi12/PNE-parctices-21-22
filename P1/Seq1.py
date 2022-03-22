@@ -72,7 +72,8 @@ class Seq:
             complement = ""
             for i in sequence:
                for c in COMPLEMENTS:
-                   complement += COMPLEMENTS[c]
+                   if i == c:
+                        complement += COMPLEMENTS[c]
             return complement
         else:
             return self.strbases
