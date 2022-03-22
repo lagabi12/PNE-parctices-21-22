@@ -16,11 +16,18 @@ class Seq:
     def valid_sequence(self):
         valid = True
         i = 0
-        while i < len(self.strbases):
-            c = self.strbases[i]
-            if c != "A" and c != "C" and c != "G" and c != "T":
-                valid = False
-            i += 1
+        if type(self) == str:
+            while i < len(self):
+                c = self[i]
+                if c != "A" and c != "C" and c != "G" and c != "T":
+                    valid = False
+                i += 1
+        else:
+            while i < len(self.strbases):
+                c = self.strbases[i]
+                if c != "A" and c != "C" and c != "G" and c != "T":
+                    valid = False
+                i += 1
         return valid
 
 
@@ -33,7 +40,9 @@ class Seq:
 
     def len(self):
         """Calculate the length of the sequence"""
-        if self.valid_sequence():
+        if type(self) == str:
+            return len(self)
+        elif self.valid_sequence():
             return len(self.strbases)
         else:
             return 0
@@ -47,7 +56,8 @@ class Seq:
         for e in seq:
             if e == base:
                 count += 1
-        return count
+        percentage = (count/len(seq))*100
+        return count, percentage
 
     def count(self):
         d = {"A": 0, "C": 0, "G": 0, "T": 0}
@@ -67,7 +77,10 @@ class Seq:
 
     def complement(self):
         if self.valid_sequence():
-            sequence = self.strbases
+            if type(self) == str:
+                sequence = self
+            else:
+                sequence = self.strbases
             COMPLEMENTS = {"A": "T", "T": "A", "C": "G", "G": "C"}
             complement = ""
             for i in sequence:
@@ -75,7 +88,7 @@ class Seq:
                    complement += COMPLEMENTS[c]
             return complement
         else:
-            return self.strbases
+            return sequence
 
     def read_fasta2(self, filename):
         from pathlib import Path

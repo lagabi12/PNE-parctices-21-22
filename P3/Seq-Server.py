@@ -2,22 +2,25 @@ import socket
 from colorama import init, Fore
 from Seq1 import Seq
 
-PORT = 8020
+PORT = 7457
 IP = "127.0.0.1"
 
-seq1 = "ATCGCCTA"
-seq2 = "TCGCCTAA"
-seq3 = "CGCCTAAT"
-seq4 = "GCCTAATC"
-seq0 = "CCTAATCG"
+seq1 = "ACCTCCTCTCCAGCAATGCCAACCCCAGTCCAGGCCCCCATCCGCCCAGGATCTCGATCA"
+seq2 = "AAAAACATTAATCTGTGGCCTTTCTTTGCCATTTCCAACTCTGCCACCTCCATCGAACGA"
+seq3 = "CAAGGTCCCCTTCTTCCTTTCCATTCCCGTCAGCTTCATTTCCCTAATCTCCGTACAAAT"
+seq4 = "CCCTAGCCTGACTCCCTTTCCTTTCCATCCTCACCAGACGCCCGCATGCCGGACCTCAAA"
+seq0 = "AGCGCAAACGCTAAAAACCGGTTGAGTTGACGCACGGAGAGAAGGGGTGTGTGGGTGGGT"
+
 sequences = (seq0, seq1, seq2, seq3, seq4)
 BASES = ["A", "C", "T", "G"]
 FOLDER = "../P0/P0/sequences/U5"
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
 try:
     serversocket.bind((IP, PORT))
+    serversocket.listen()
     print("Server configured!")
     print("Waiting for clients...")
 
@@ -29,30 +32,32 @@ try:
 
         # Read the message from the client
         msg = clientsocket.recv(2048).decode("utf-8")
-        print("Message from client: {}".format(Fore.LIGHTYELLOW_EX + msg))
 
         # Send the message
-        slice = msg.split(" ")
-        command = slice[0]
-        arg = slice[1]
+        slices = msg.split(" ")
+        command = slices[0]
+        if len(slices) >= 2:
+            arg = slices[1]
+        else:
+            arg = "none"
 
         if command == "PING":
-            print("PING command!".format(Fore.LIGHTGREEN_EX))
+            print("PING command!".format(Fore.LIGHTYELLOW_EX))
             response = f"OK!\n"
 
         elif command == "GET":
-            print("GET command!".format(Fore.LIGHTGREEN_EX))
-            if type(arg) == int and 0 <= int(arg) <= 4:
-                arg = int(arg)
-                response = sequences[arg]
+            print("GET command!".format(Fore.LIGHTYELLOW_EX))
+            if 0 <= int(arg) <= 4:
+                response = sequences[int(arg)]
             else:
                 response = "Argument must be an int between 0 and 4"
 
         elif command == "INFO":
-            length = Seq.len(arg)
+            length = str(Seq.len(arg))
             for base in BASES:
-                bases = base + ": " + Seq.count_base(arg, base)
-            response = length + bases
+                info = Seq.count_base(arg, base)
+                bases = base + ": " + str(info[0]) + "(" + str(info[1]) + "%) \n"
+            response = length + "\n" + bases
 
         elif command == "COMP":
             response = Seq.complement(arg)
@@ -70,6 +75,13 @@ try:
         send_bytes = str.encode(Fore.LIGHTGREEN_EX + response)
         clientsocket.send(send_bytes)
         clientsocket.close()
+        serversocket.close()
+
+        serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        serversocket.bind((IP, PORT))
+        serversocket.listen()
+        print("Waiting for clients...")
 
 except socket.error:
     print("Problems using port {}. Do you have permission?".format(PORT))
