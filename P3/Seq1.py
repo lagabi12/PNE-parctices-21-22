@@ -25,9 +25,7 @@ class Seq:
 
     def __str__(self):
         """Method called when the object is being printed"""
-
-        # -- We just return the string with the sequence
-        return self.strbases
+        return self.bases
 
     def len(self, valid):
         """Calculate the length of the sequence"""
@@ -76,12 +74,15 @@ class Seq:
         else:
             return "NONE"
 
-    def read_fasta(self, filename):
+    def seq_read_fasta(self, file_name):
         from pathlib import Path
-        seq = Path(filename).read_text()
-        seq = seq[seq.find("\n") + 1:]
-        seq = seq.replace("\n", "")
-        self = seq
+
+        file_cont = Path(file_name).read_text()
+        lines = file_cont.splitlines()
+        body = lines[1:]
+        self.bases = ""
+        for line in body:
+            self.bases += line
 
     def frequent_base(self):
         most_common = ""

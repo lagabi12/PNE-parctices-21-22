@@ -11,8 +11,8 @@ seq3 = "CAAGGTCCCCTTCTTCCTTTCCATTCCCGTCAGCTTCATTTCCCTAATCTCCGTACAAAT"
 seq4 = "CCCTAGCCTGACTCCCTTTCCTTTCCATCCTCACCAGACGCCCGCATGCCGGACCTCAAA"
 seq0 = "AGCGCAAACGCTAAAAACCGGTTGAGTTGACGCACGGAGAGAAGGGGTGTGTGGGTGGGT"
 sequences = (seq0, seq1, seq2, seq3, seq4)
-BASES = ["A", "C", "T", "G"]
 FOLDER = "./sequences/"
+BASES = ["A", "C", "T", "G"]
 GENES = ["U5", "ADA", "FRAT1", "FXN", "RNU"]
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -33,9 +33,9 @@ try:
 
         # Send the message
         slices = msg.split(" ")
-        command = slices[0]
+        command = slices[0].replace("\n", "").strip()
         if len(slices) >= 2:
-            arg = slices[1]
+            arg = slices[1].replace("\n", "").strip()
         else:
             arg = "none"
 
@@ -46,7 +46,7 @@ try:
         elif command == "GET":
             termcolor.cprint("GET", "yellow")
             if 0 <= int(arg) <= 4:
-                response = sequences[int(arg)]
+                response = "GET" + str(arg) + ":" + sequences[int(arg)]
             else:
                 response = "Argument must be an int between 0 and 4"
 
@@ -82,7 +82,7 @@ try:
                 termcolor.cprint("GENE", "yellow")
                 s = Seq()
                 filename = FOLDER + arg
-                s.read_fasta(filename)
+                s.seq_read_fasta(filename)
                 response = str(s)
             else:
                 response = "File not found"
