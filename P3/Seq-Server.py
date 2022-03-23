@@ -82,15 +82,25 @@ try:
                 termcolor.cprint("GENE", "yellow")
                 s = Seq()
                 filename = FOLDER + arg
-                s.seq_read_fasta(filename)
+                s.read_fasta(filename)
                 response = str(s)
             else:
                 response = "File not found"
+
+        elif command == "ADD":
+            termcolor.cprint("ADD", "yellow")
+            valid = Seq.valid_sequence(arg)
+            if valid:
+                total = Seq.sums(arg, valid)
+                response = "The sum is: " + str(total)
+            else:
+                response = "We could not multiply the bases since the sequence is not correct."
 
         else:
             response = "Command not available in this server\n"
 
         print(response)
+
         try:
             send_bytes = str.encode(response)
             clientsocket.send(send_bytes)

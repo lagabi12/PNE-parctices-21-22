@@ -74,7 +74,7 @@ class Seq:
         else:
             return "NONE"
 
-    def seq_read_fasta(self, file_name):
+    def read_fasta(self, file_name):
         from pathlib import Path
 
         file_cont = Path(file_name).read_text()
@@ -94,3 +94,17 @@ class Seq:
             elif int(c[b]) > c[most_common]:
                 most_common = b
         return most_common
+
+    def sums(self, valid):
+        n = 0
+        NUM_BASES = {"A": 3, "T": -2, "C": 4, "G": -6}
+        if valid:
+            for i in self:
+                for b in NUM_BASES:
+                    if i == b:
+                        n += NUM_BASES[b]
+            return n
+        else:
+            return 0
+
+

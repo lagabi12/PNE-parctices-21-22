@@ -17,10 +17,14 @@ print("Testing COMP...")
 c.debug_talk(f"COMP {seq}")
 print("Testing REV...")
 c.debug_talk(f"REV {seq}")
-print("Testing GENE...")
+print("\nTesting GENE...")
 for g in GENES:
     print(g)
     c.debug_talk(f"GENE {g}")
+
+msg = input("Message for the server: ")
+print("FUNCTION ADD: ")
+c.debug_talk(msg)
 
 
 
