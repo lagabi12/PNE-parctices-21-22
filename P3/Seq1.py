@@ -23,8 +23,6 @@ class Seq:
             i += 1
         return valid
 
-
-
     def __str__(self):
         """Method called when the object is being printed"""
 
@@ -38,7 +36,6 @@ class Seq:
         else:
             return 0
 
-
     def count_base(self, base):
         seq = self[self.find("\n") + 1:]
         seq = seq.replace("\n", "")
@@ -47,7 +44,7 @@ class Seq:
         for e in seq:
             if e == base:
                 count += 1
-        percentage = (count/len(seq))*100
+        percentage = round((count/len(seq))*100, 2)
         return count, percentage
 
     def count(self):
@@ -79,7 +76,7 @@ class Seq:
         else:
             return "NONE"
 
-    def read_fasta2(self, filename):
+    def read_fasta(self, filename):
         from pathlib import Path
         seq = Path(filename).read_text()
         seq = seq[seq.find("\n") + 1:]
