@@ -1,7 +1,6 @@
 import socket
 import termcolor
 
-
 # -- Server network parameters
 IP = "127.0.0.1"
 PORT = 8080
@@ -29,23 +28,21 @@ def process_client(s):
     # header
     # blank line
     # Body (content to send)
-
+    try:
+        route = req_line.split(" ")[1]
+        filename = route[1:]
+        print(route)
+    except IndexError:
+        route = "/"
     # This new contents are written in HTML language
-    body = """
-    <!DOCTYPE html>
-    <html lang="en" dir="ltr">
-      <head>
-        <meta charset="utf-8">
-        <title>ADENINE</title>
-      </head>
-      <body style="background-color: lightgreen;">
-        <h1>ADENINE</h1>
-        <p>Letter : A</p>
-        <p>Chemical formula: C5H5N5</p>
-        <a href="https://en.wikipedia.org/">More info</a>
-      </body>
-    </html>
-    """
+    if route == "/" or route == "/favicon.ico":
+        filename = "index"
+    elif route == "/info/A":
+        filename = "A"
+    else:
+        filename == "error"
+    body = ("html/" + filename + ".html").read_text()
+
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"
 
