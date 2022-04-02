@@ -1,5 +1,6 @@
 import socket
 import termcolor
+from pathlib import Path
 
 # -- Server network parameters
 IP = "127.0.0.1"
@@ -23,25 +24,23 @@ def process_client(s):
     termcolor.cprint(req_line, "green")
 
     # -- Generate the response message
-    # It has the following lines
-    # Status line
-    # header
-    # blank line
-    # Body (content to send)
+
     try:
         route = req_line.split(" ")[1]
         filename = route[1:]
         print(route)
+
     except IndexError:
         route = "/"
     # This new contents are written in HTML language
-    if route == "/" or route == "/favicon.ico":
-        filename = "index"
-    elif route == "/info/A":
-        filename = "A"
-    else:
-        filename == "error"
-    body = ("html/" + filename + ".html").read_text()
+    try:
+        if route == "/" or route == "/favicon.ico":
+            filename = "index"
+
+        body = Path(filename + ".html").read_text()
+
+    except FileNotFoundError:
+        body = Path("error.html").read_text()
 
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"
