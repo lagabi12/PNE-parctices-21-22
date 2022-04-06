@@ -35,9 +35,7 @@ def process_client(s):
     # This new contents are written in HTML language
     try:
         if route == "/" or route == "/favicon.ico":
-            filename = "index"
-
-        body = Path(filename + ".html").read_text()
+            body = Path("index.html").read_text()
 
     except FileNotFoundError:
         body = Path("error.html").read_text()
