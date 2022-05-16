@@ -94,4 +94,3 @@ class Seq:
             elif int(c[b]) > c[most_common]:
                 most_common = b
         return most_common
-

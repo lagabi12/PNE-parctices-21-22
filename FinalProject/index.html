@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>FORM 2</title>
+  </head>
+  <body>
+    <h1>Browsing Human and Vertebrae Genomes</h1>
+    <p>BASIC LEVEL SERVICES</p>
+    <hr>
+
+    <form action="/species" method="get">
+      1)List of species in database
+        Limit:
+      <br>
+      <br>
+      <input type="text" name="Limit">
+      <br>
+      <br>
+        <input type="submit" value="SEND">
+    </form>
+    <hr>
+    <form action="/karyopype" method="get">
+      2) Information about the karyotype
+      Select the species:
+      <br>
+      <br>
+        <input type="text" name="specie">
+      <br>
+      <br>
+        <input type="submit" value="SEND">
+    </form>
+    <hr>
+
+  <form action="/chromosomeLength" method="get">
+       3)Chromosome length:
+      <br>
+    <br>
+        Select the species:
+        <input type="text" name="specie">
+    <br>
+    <br>
+        Select a chromosome:
+        <input type="text" name="chromosome">
+    <br>
+    <br>
+        <input type="submit" value="SEND">
+    </form>
+    <hr>
+
+
+  </body>
+</html>
+
