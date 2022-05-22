@@ -5,8 +5,9 @@
     <title>NAMES</title>
 </head>
 <body style="background-color: lightgreen">
-<body>
 Names of the chromosomes:
-{{context.species}}
+{%for e in context.species%}
+    <ul><li>{{e}}</li></ul>
+{%endfor%}
 </body>
 </html>

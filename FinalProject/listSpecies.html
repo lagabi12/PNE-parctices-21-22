@@ -11,7 +11,9 @@ The total number of species in Ensembl is: {{context.length}}
 The limit you have selected is: {{context.limit}}
 <br>
 The names of the species are:
-{{context.list}}
+{%for s in context.list%}
+    <ul><li>{{s}}</li></ul>
+{%endfor%}
 <br>
 <p> </p>
 <a href="/">Main page</a>
