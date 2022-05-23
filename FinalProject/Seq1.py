@@ -12,12 +12,11 @@ class Seq:
             else:
                 print("New sequence created!")
 
-
     def valid_sequence(self):
         valid = True
         i = 0
-        while i < len(self):
-            c = self[i]
+        while i < len(self.strbases):
+            c = self.strbases[i]
             if c != "A" and c != "C" and c != "G" and c != "T":
                 valid = False
             i += 1
@@ -27,12 +26,6 @@ class Seq:
         """Method called when the object is being printed"""
         return self.bases
 
-    def len(self, valid):
-        """Calculate the length of the sequence"""
-        if valid:
-            return len(self)
-        else:
-            return 0
 
     def count_base(self, base):
         seq = self[self.find("\n") + 1:]
@@ -53,6 +46,15 @@ class Seq:
                    d[b] += 1
         return d
 
+    def count_bases(self):
+        d = {"A": 0, "C": 0, "G": 0, "T": 0}
+        for b in self.strbases:
+            d[b] += 1
+        total = sum(d.values())
+        for k, v in d.items():
+            d[k] = [v, (v * 100) / total]
+        return d
+
     def reverse(self, valid):
         if valid:
             fragment = self
@@ -61,18 +63,6 @@ class Seq:
         else:
             return self
 
-    def complement(self, valid):
-        if valid:
-            sequence = self
-            COMPLEMENTS = {"A": "T", "T": "A", "C": "G", "G": "C"}
-            complement = ""
-            for i in sequence:
-               for c in COMPLEMENTS:
-                   if i == c:
-                        complement += COMPLEMENTS[c]
-            return complement
-        else:
-            return "NONE"
 
     def read_fasta(self, file_name):
         from pathlib import Path
@@ -84,27 +74,5 @@ class Seq:
         for line in body:
             self.bases += line
 
-    def frequent_base(self):
-        most_common = ""
-        seq = self
-        c = self.count()
-        for b in c:
-            if most_common == "":
-                most_common = b
-            elif int(c[b]) > c[most_common]:
-                most_common = b
-        return most_common
-
-    def sums(self, valid):
-        n = 0
-        NUM_BASES = {"A": 3, "T": -2, "C": 4, "G": -6}
-        if valid:
-            for i in self:
-                for b in NUM_BASES:
-                    if i == b:
-                        n += NUM_BASES[b]
-            return n
-        else:
-            return 0
 
 
