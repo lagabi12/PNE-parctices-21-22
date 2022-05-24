@@ -26,12 +26,13 @@ class Seq:
         """Method called when the object is being printed"""
         return self.bases
 
+    def len(self):
+        return len(self.strbases)
 
     def count_base(self, base):
         seq = self[self.find("\n") + 1:]
         seq = seq.replace("\n", "")
         count = 0
-
         for e in seq:
             if e == base:
                 count += 1
@@ -52,7 +53,7 @@ class Seq:
             d[b] += 1
         total = sum(d.values())
         for k, v in d.items():
-            d[k] = [v, (v * 100) / total]
+            d[k] = [v, round((v * 100) / total, 4)]
         return d
 
     def reverse(self, valid):
@@ -63,10 +64,8 @@ class Seq:
         else:
             return self
 
-
     def read_fasta(self, file_name):
         from pathlib import Path
-
         file_cont = Path(file_name).read_text()
         lines = file_cont.splitlines()
         body = lines[1:]
